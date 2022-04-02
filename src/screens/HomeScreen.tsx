@@ -1,20 +1,35 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { ScrollView, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-interface Props extends StackScreenProps<any, any> { };
+import { useMovies } from '../hooks/useMovies';
+import { Loading } from '../components/Loading';
+import { HorizontalSlider } from '../components/HorizontalSlider';
+import { MovieSCarousel } from '../components/MoviesCarousel';
 
-export const HomeScreen = ({ navigation }: Props) => {
+export const HomeScreen = () => {
+
+  const { nowPlaying, popular, topRated, upcoming, isLoading } = useMovies();
+  const { top } = useSafeAreaInsets();
+
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
-    <View>
-      <Text>HomeScren</Text>
+    <ScrollView>
+      
+      <View style={{ marginTop: top + 20 }}>
 
-      <Button
-        title="Ir detalle"
-        onPress={() => navigation.navigate("DetailScreen")} />
+        <MovieSCarousel nowPlaying={nowPlaying} />
 
-    </View>
+        <HorizontalSlider title="Popular" movies={popular} />
+
+        <HorizontalSlider title="Top Rated" movies={topRated} />
+
+        <HorizontalSlider title="Upcoming" movies={upcoming} />
+
+      </View>
+    </ScrollView>
   )
 }
