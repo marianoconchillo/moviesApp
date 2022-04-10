@@ -5,7 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useMovies } from '../hooks/useMovies';
 import { Loading } from '../components/Loading';
 import { HorizontalSlider } from '../components/HorizontalSlider';
-import { MovieSCarousel } from '../components/MoviesCarousel';
+import { MoviesCarousel } from '../components/MoviesCarousel';
+import { GradientBackground } from '../components/GradientBackground';
 
 export const HomeScreen = () => {
 
@@ -17,19 +18,24 @@ export const HomeScreen = () => {
   }
 
   return (
-    <ScrollView>
+    <GradientBackground>
+
+      <ScrollView>
+
+        <View style={{ marginTop: top + 20 }}>
+
+          <MoviesCarousel nowPlaying={nowPlaying} />
+
+          <HorizontalSlider title="Popular" movies={popular} />
+
+          <HorizontalSlider title="Top Rated" movies={topRated} />
+
+          <HorizontalSlider title="Upcoming" movies={upcoming} />
+
+        </View>
+        
+      </ScrollView>
       
-      <View style={{ marginTop: top + 20 }}>
-
-        <MovieSCarousel nowPlaying={nowPlaying} />
-
-        <HorizontalSlider title="Popular" movies={popular} />
-
-        <HorizontalSlider title="Top Rated" movies={topRated} />
-
-        <HorizontalSlider title="Upcoming" movies={upcoming} />
-
-      </View>
-    </ScrollView>
+    </GradientBackground>
   )
 }
